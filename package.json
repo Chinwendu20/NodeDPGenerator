@@ -1,0 +1,19 @@
+{
+  "name": "nodedpgenerator",
+  "version": "1.0.0",
+  "description": "This is a Custom DP generator created for a hackathon",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Chinwendu20/NodeDPGenerator.git"
+  },
+  "author": "Ononiwu Maureen Chiamaka",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Chinwendu20/NodeDPGenerator/issues"
+  },
+  "homepage": "https://github.com/Chinwendu20/NodeDPGenerator#readme"
+}
