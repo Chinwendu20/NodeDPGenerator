@@ -1,10 +1,12 @@
 {
   "name": "nodedpgenerator",
   "version": "1.0.0",
+  "type": "module",
   "description": "This is a Custom DP generator created for a hackathon",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +17,24 @@
   "bugs": {
     "url": "https://github.com/Chinwendu20/NodeDPGenerator/issues"
   },
-  "homepage": "https://github.com/Chinwendu20/NodeDPGenerator#readme"
+  "homepage": "https://github.com/Chinwendu20/NodeDPGenerator#readme",
+  "dependencies": {
+    "busboy": "^1.5.0",
+    "circle-image": "^1.0.43",
+    "cloudinary": "^1.29.0",
+    "connect-pg-simple": "^7.0.0",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "express-session": "^1.17.2",
+    "gm": "^1.23.1",
+    "imagemagick": "^0.1.3",
+    "jimp": "^0.16.1",
+    "multer": "^1.4.4",
+    "node-fetch": "^3.2.3",
+    "nodemon": "^2.0.15",
+    "pg": "^8.7.3",
+    "swagger-jsdoc": "^6.2.1",
+    "swagger-ui-express": "^4.3.0"
+  }
 }
