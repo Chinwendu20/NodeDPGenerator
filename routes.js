@@ -3,6 +3,11 @@ import {PostView,PostUpdateView, PostDestroyView, PostGetUser, PhotoManipulateVi
 const router= express.Router();
 import multer from "multer" 
 import swaggerUi from 'swagger-ui-express'
+import swaggerJsdoc from"swagger-jsdoc"
+import YAML from 'yamljs';
+const swaggerDocument = YAML.load('./swagger.yaml');
+
+
 export const upload = multer({ dest: "upload/" })
 
 router.use('/api-docs', swaggerUi.serve)

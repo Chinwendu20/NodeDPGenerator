@@ -1,0 +1,320 @@
+swagger: '2.0'
+info:
+  title: Custom DP generator
+  description: This is a REST API created with to generate custom display pictures to show affilition to brands and events.
+  contact:
+    email: maureen.ononiwu13@gmail.com
+    url: https://www.linkedin.com/in/maureen-ononiwu/
+  version: v1
+host: dp-generator-api.herokuapp.com
+schemes:
+  - https
+basePath: /
+consumes:
+  - application/json
+produces:
+  - application/json
+securityDefinitions:
+  Basic:
+    type: basic
+security:
+  - Basic: []
+paths:
+  /make/dp/{slug}/:
+    post:
+      operationId: make_dp_create
+      description: 'This end point creates the custom display pictures'
+      parameters:
+        - name: User_Photo
+          in: formData
+          required: true
+          type: file
+      responses:
+        '201':
+          description: 'Successfully posted data to database'
+          schema:
+            $ref: '#/definitions/CustomDP_Model'
+      consumes:
+        - multipart/form-data
+      tags:
+        - This is where the magic happens!
+    parameters:
+      - name: slug
+        in: path
+        required: true
+        type: string
+  /update/{id}/:
+    patch:
+      operationId: update_modify
+      description: 'Update and modify data about a campaign'
+      parameters:
+        - name: Banner
+          in: formData
+          required: false
+          type: string
+        - name: Link
+          in: formData
+          required: false
+          type: string
+          format: slug
+          pattern: ^[-a-zA-Z0-9_]+$
+          maxLength: 250
+          minLength: 1
+        - name: Height
+          in: formData
+          required: false
+          type: string
+          maxLength: 200
+          minLength: 1
+        - name: Width
+          in: formData
+          required: false
+          type: string
+          maxLength: 200
+          minLength: 1
+        - name: Position_x
+          in: formData
+          required: false
+          type: string
+          maxLength: 200
+          minLength: 1
+        - name: Position_y
+          in: formData
+          required: false
+          type: string
+          maxLength: 200
+          minLength: 1
+        - name: Border_radius
+          in: formData
+          required: false
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          x-nullable: true
+        - name: Name
+          in: formData
+          required: false
+          type: string
+          maxLength: 200
+          minLength: 1
+        - name: Description
+          in: formData
+          required: false
+          type: string
+          maxLength: 200
+          minLength: 1
+      responses:
+        '200':
+          description: 'Successful update'
+          schema:
+            $ref: '#/definitions/Campaign_Model'
+        '403':
+          description: 'Forbidden request'
+      consumes:
+        - multipart/form-data
+      tags:
+        - Modify campaign details
+    parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+  /delete/{id}/:
+    delete:
+      operationId: modify_delete
+      description: 'Delete campaign'
+      parameters: []
+      responses:
+        '204':
+          description: 'Successful deletion'
+      consumes:
+        - multipart/form-data
+      tags:
+        - Delete campaign
+    parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+  /post/:
+    post:
+      operationId: post_create
+      description: 'This returns JSON data of the campaign'
+      parameters:
+        - name: Banner
+          in: formData
+          required: true
+          type: file
+        - name: Link
+          in: formData
+          required: true
+          type: string
+          format: slug
+          pattern: ^[-a-zA-Z0-9_]+$
+          maxLength: 250
+          minLength: 1
+        - name: Height
+          in: formData
+          required: true
+          type: string
+          maxLength: 200
+          minLength: 1
+        - name: Width
+          in: formData
+          required: true
+          type: string
+          maxLength: 200
+          minLength: 1
+        - name: Position_x
+          in: formData
+          required: true
+          type: string
+          maxLength: 200
+          minLength: 1
+        - name: Position_y
+          in: formData
+          required: true
+          type: string
+          maxLength: 200
+          minLength: 1
+        - name: Border_radius
+          in: formData
+          required: false
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          x-nullable: true
+        - name: Name
+          in: formData
+          required: true
+          type: string
+          maxLength: 200
+          minLength: 1
+        - name: Description
+          in: formData
+          required: true
+          type: string
+          maxLength: 200
+          minLength: 1
+      responses:
+        '201':
+          description: 'successful request'
+          schema:
+            $ref: '#/definitions/Campaign_Model'
+        '500':
+          description: 'Link already in use or incomplete response'
+      consumes:
+        - multipart/form-data
+      tags:
+        - Create campaign
+    parameters: []
+  /{slug}/:
+    get:
+      operationId: read
+      description: "This is the sharable link sent to people to create customised DPs using a campaign's banner"
+      parameters: []
+      responses:
+        '200':
+          description: 'Successful request'
+      consumes:
+        - multipart/form-data
+      tags:
+        - Sharable link given to users by campaign creators
+    parameters:
+      - name: slug
+        in: path
+        required: true
+        type: string
+definitions:
+  CustomDP_Model:
+    type: object
+    properties:
+      file_uploaded:
+        title: User_Photo
+        type: string
+        readOnly: true
+        format: uri
+        description: URL of the uploaded file 
+  Campaign_Model:
+    required:
+      - Link
+      - Height
+      - Width
+      - Position_x
+      - Position_y
+      - Name
+      - Description
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+        description: "This is the unique id of the camapaign"
+        example: 1
+      Banner:
+        title: File uploaded
+        type: string
+        readOnly: true
+        format: uri
+        description: This is the URL of the uploaded banner for the campaign
+        example: https://res.cloudinary/sample.png
+      Link:
+        title: Link
+        type: string
+        format: slug
+        pattern: ^[-a-zA-Z0-9_]+$
+        maxLength: 250
+        minLength: 1
+        description: This is the slug used to create the link used to create a sharable link.
+        example: sluglink
+      Height:
+        title: Height
+        type: string
+        maxLength: 200
+        minLength: 1
+        description: This is the vertical length of the image to be pasted.
+        example: 240
+      Width:
+        title: Width
+        type: string
+        maxLength: 200
+        minLength: 1
+        description: This is the horizontal length of the image to be pasted.
+        example: 240
+      Position_x:
+        title: Position x
+        type: string
+        maxLength: 200
+        minLength: 1
+        description: This is the distance of the image to be pasted on the banner from the left.
+        example: 212
+      Position_y:
+        title: Position y
+        type: string
+        maxLength: 200
+        minLength: 1
+        description: This is the distance of the image to be pasted on the banner from the top.
+        example: 234
+      Border_radius:
+        title: Border radius
+        type: integer
+        maximum: 2147483647
+        minimum: -2147483648
+        x-nullable: true
+      Name:
+        title: Name
+        type: string
+        maxLength: 200
+        minLength: 1
+        description: "This represents the name of the campaign."
+        example: "Kwarabuild initiative"
+      Description:
+        title: Description
+        type: string
+        maxLength: 200
+        minLength: 1
+        description: The name of the campaign.
+        example: Kwarabuild initiative
+
+

@@ -11,15 +11,6 @@ import fs from 'fs'
 
 
 
-/*
-Logic for creating the post.
-- It accepts the upload of the Banner/campaign flyer.
--Obtains all the attributes for the database table, 'photo'
-from the body of the request
-(Only one table was used for this web application. Its name
-is photo)
-*/
-
 
 export const PostView = (req, res, next) => {
 
@@ -116,7 +107,7 @@ export const PostView = (req, res, next) => {
         
         
 
-        res.status(200)
+        res.status(201)
 
         delete content.session
 
@@ -271,7 +262,7 @@ try{
       await Banner.writeAsync(upload_image);
       var custom_dp_url;
    cloudinary.v2.uploader.upload(upload_image).then(y=>{
-   res.status(200)
+   res.status(201)
 
    // console.log(y)
    res.json({url: y.url})

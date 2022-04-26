@@ -8,6 +8,11 @@ dotenv.config()
 
 
 
+
+
+
+
+
 const app = express()
 const port = 3000
 app.use(bodyParser.json())
@@ -22,8 +27,10 @@ app.use(expressSession({
             sameSite: true,
             maxAge: 1000 * 60 * 60 * 24,
         },
-  // Insert express-session options here
+
 }))
+
+
 app.use("", approutes)
 
 app.listen(port, ()=>console.log(` Server running on 127.0.0.1:${port}`))
