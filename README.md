@@ -53,8 +53,7 @@ This contains specifiction for Swagger documentation.
 |post/                |This creates the campaign.     |
 |delete/{id}/         |This deletes a campaign|                 
 |update/{id}/         |Updates data about a campaign |
-|{slug}/              | This is the sharable link sent to people to create
-customised DPs using a campaign's banner|
+|{slug}/              | This is the sharable link sent to people to create customised DPs using a campaign's banner|
 |make/dp/{slug}       | This end point creates the custom display pictures|
 
 ## Good to know!!
@@ -64,7 +63,7 @@ This project was originally built with Django but when I discovered in early Apr
 ## Projects built for the hackathon
 
 * DP Generator
-  [Live site](https://dp-generator.vercel.app/)| [Github link](https://github.com/eniolajayi/dp-generator)
+  [Live site](https://dp-generator.vercel.app/)| [Github link to frontend project](https://github.com/eniolajayi/dp-generator)
   
   [Live demo](https://www.linkedin.com/posts/maureen-ononiwu_hackforgrowth-codesandboxchallenge-codenewbie-activity-6914716433453043713-wTwe?utm_source=linkedin_share&utm_medium=member_desktop_web)
   
