@@ -35,5 +35,5 @@ app.use(expressSession({
 
 app.use("", approutes)
 
-// app.listen(port, ()=>console.log(` Server running on ${(process.env.host_name)}:${port}`))
-app.listen(0)
+app.listen(port, ()=>console.log(` Server running on ${(process.env.host_name)}:${port}`))
+// app.listen(0)

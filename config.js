@@ -8,14 +8,15 @@ import cloudinary from "cloudinary"
 const app = express()
 const {Pool}=pg
 dotenv.config()
-
+const connectionString = process.env.DATABASE_URL
 
 export const connect_pool = new Pool({
-	user: process.env.user,
-	host:process.env.host,
-	database:process.env.database,
-	password:process.env.password,
-	port:process.env.port,
+	// user: process.env.user,
+	// host:process.env.host,
+	// database:process.env.database,
+	// password:process.env.password,
+	// port:process.env.port,
+	connectionString,
 	ssl:{require: true, 
 		rejectUnauthorized: false}
 })
