@@ -18,6 +18,32 @@ This REST API creates customised display pictures for brands and events to impro
 * Heroku, used for deployment.
 * Swagger used for documentation.
 
+## Files and folder in the project
+
+-***readme-images***
+This contains images used in read-me of the project.
+
+-***upload***
+This contains images that were downloaded and uploaded to the server for processing.
+
+-***config.js***
+Contains configuration settings for the database connection, multer.js and session storage
+
+-***controller.js***
+Contains logic for the routes.
+
+-***helper.js***
+Contains user created functions used to avoid repetition in the codebase.
+
+-***index.js***
+Entry point for the application.
+
+-***routes.js***
+This contains the path definition to routes
+
+-***swagger.yml***
+This contains specifiction for Swagger documentation.
+
 ## Endpoints
 
 [Link to API documentation and testing](https://node-dp-generator.herokuapp.com/api-docs/)
@@ -33,7 +59,7 @@ customised DPs using a campaign's banner|
 
 ## Good to know!!
 
-This project was originally built with Django but when I discovered in early April that Django projects were not good code samples for the MLH fellowship. I rewrote the code and submitted my application on the 26th of the same month. The project built for the hackathon was created with Django, here is the [link](https://github.com/Chinwendu20/I4GDPGenerator)
+This project was originally built with Django but when I discovered in early April that Django projects were not good code samples for the MLH fellowship. I rewrote the code and submitted my application on the 26th of the same month having no prior knowledge or experience with nodejs. The project built for the hackathon was created with Django, here is the [link](https://github.com/Chinwendu20/I4GDPGenerator)
 
 ## Projects built for the hackathon
 
