@@ -2,26 +2,34 @@
 ## About The Project
 
 
-This is a rest api for generating customized DP's for events. Just like [getdp.co](getdp.co).
+This is a REST API that was [built as a clone to the DJango REST API](https://github.com/Chinwendu20/I4GDPGenerator) that I created for [ingressive for good](https://ingressive.org/)'s hack for growth. This was the ***problem statment***:
 
+> At I4G we noticed a common problem among several of our community members. Almost every organizer is so keen on the tools to promote their events. Having a local platform where users can create and share personalized DP would increase their campaign reach and also give their events more visibility. The site can also include a comments system and likes features for ranking. Sensing an opportunity to help others with their event campaign, we created a community challenge that will help in exploring possible solutions as part of our program at I4G.
+
+This REST API creates customised display pictures for brands and events to improve brand visibility and awareness.
 
 ## Technologies Used
 
-* [Django rest framework](django-rest-framework.org)
-* [Pillow](https://pillow.readthedocs.io/en/stable/)
-* [Cloudinary](https://cloudinary.com/)
+* Nodejs, runtime for running javascript on the server.
+* Express js , backend framework for development.
+* Cloudinary, used as image's cloud storage.
+* PostgreSQL, Database used for project.
+* Jimp, for image pocessing.
+* Heroku, used for deployment.
+* Swagger used for documentation.
 
-## [Endpoints](https://dp-generator-api.herokuapp.com/)
+## [Endpoints]
+
+[Link to API documentation and testing](https://node-dp-generator.herokuapp.com/api-docs/)
 
 |ROUTE                |DESCRIPTION                    |
 |---------------------|-------------------------------|
 |post/                |This creates the campaign.     |
-|view/post/           |This returns the json of data created by a user on a browser. All the post created on a browser are returned as users are identified by session|
-|                     |id's. |                 
-|modify/{id}/         |This works with two http verbs, 'put' for modification, 'delete' to delete a post. An authorization measure was put as we are working with|
-|                     |anonymous users such that one can only deleted posts created in a particular browser otherwise there is an error.|
-|{slug}/              | This is the custom url created by campaign creators to share with users to create their custom dp.|
-|make/dp/{slug}       | This is where the magic happens. This creates the custom dp. There is support for a circular , rounded rectangle or rectangular selected area.|
+|delete/{id}/         |This deletes a campaign|                 
+|update/{id}/         |Updates data about a campaign |
+|{slug}/              | This is the sharable link sent to people to create
+customised DPs using a campaign's banner|
+|make/dp/{slug}       | This end point creates the custom display pictures|
 
 
 
@@ -35,14 +43,6 @@ This is a rest api for generating customized DP's for events. Just like [getdp.c
 
 
 
-## Contributing
-
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
 
 Ensure to contact me on [Linkedin](https://www.linkedin.com/in/maureen-ononiwu-49b3b212a/)
 
