@@ -5,12 +5,8 @@ import { pgSession } from './config.js'
 import expressSession from 'express-session'
 import dotenv from 'dotenv'
 import cors from 'cors'
-import swaggerUi from 'swagger-ui-express'
-import swaggerJsdoc from"swagger-jsdoc"
-import YAML from 'yamljs';
-const swaggerDocument = YAML.load('./swagger.yaml');
-const router= express.Router();
 dotenv.config()
+
 
 
 const app = express()
@@ -36,8 +32,7 @@ app.use(expressSession({
 
 }))
 
-router.use('/api-docs', swaggerUi.serve)
-router.get('/api-docs', swaggerUi.setup(swaggerDocument))
+
 app.use("", approutes)
 
-app.listen(port, ()=>console.log(` Server running on 127.0.0.1:${port}`))
+app.listen(port, ()=>console.log(` Server running on ${(process.env.host_name)}:${port}`))

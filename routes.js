@@ -1,11 +1,14 @@
 import express from 'express'
+import dotenv from 'dotenv'
 import {PostView,PostUpdateView, PostDestroyView, PostGetUser, PhotoManipulateView } from './controller.js'
-const router= express.Router();
 import multer from "multer" 
 import swaggerUi from 'swagger-ui-express'
 import swaggerJsdoc from"swagger-jsdoc"
 import YAML from 'yamljs';
 const swaggerDocument = YAML.load('./swagger.yaml');
+const router= express.Router();
+dotenv.config()
+
 
 
 export const upload = multer({ dest: "upload/" })
