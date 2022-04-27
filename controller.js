@@ -12,12 +12,13 @@ import fs from 'fs'
 
 
 
+
 export const PostView = (req, res, next) => {
 
-    console.log(req.session)
-    console.log(req.session.id)
+    console.log(req.headers)
 
-    const content={Banner: "Dummy", Link: req.body.Link, Height: req.body.Height, Width: req.body.Width, 
+
+    const content={Banner: req.file, Link: req.body.Link, Height: req.body.Height, Width: req.body.Width, 
             Position_x: req.body.Position_x, Position_y: req.body.Position_y, Border_radius: req.body.Border_radius, 
             Name: req.body.Name, Description:req.body.Description, session: req.session.id}
 
@@ -50,7 +51,7 @@ export const PostView = (req, res, next) => {
         res.status(500)
 
         res.json(undefined_values)
-
+            console.log(res.getHeaders()['content-type'])
         return
 
     }
@@ -110,6 +111,8 @@ export const PostView = (req, res, next) => {
         res.status(201)
 
         delete content.session
+
+        content.id = req.body.id
 
         res.json(content)
 

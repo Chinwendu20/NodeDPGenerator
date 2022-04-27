@@ -6,9 +6,10 @@ info:
     email: maureen.ononiwu13@gmail.com
     url: https://www.linkedin.com/in/maureen-ononiwu/
   version: v1
-host: dp-generator-api.herokuapp.com
+host: 127.0.0.1:3000
 schemes:
   - https
+  - http
 basePath: /
 consumes:
   - application/json
@@ -200,7 +201,7 @@ paths:
         '201':
           description: 'successful request'
           schema:
-            $ref: '#/definitions/Campaign_Model'
+            $ref: '#/definitions/Campaign'
         '500':
           description: 'Link already in use or incomplete response'
       consumes:
@@ -229,7 +230,7 @@ definitions:
   CustomDP_Model:
     type: object
     properties:
-      file_uploaded:
+      User_Photo:
         title: User_Photo
         type: string
         readOnly: true
@@ -253,7 +254,7 @@ definitions:
         description: "This is the unique id of the camapaign"
         example: 1
       Banner:
-        title: File uploaded
+        title: Banner
         type: string
         readOnly: true
         format: uri
