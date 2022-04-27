@@ -18,7 +18,7 @@ This REST API creates customised display pictures for brands and events to impro
 * Heroku, used for deployment.
 * Swagger used for documentation.
 
-## [Endpoints]
+## Endpoints
 
 [Link to API documentation and testing](https://node-dp-generator.herokuapp.com/api-docs/)
 
@@ -31,12 +31,16 @@ This REST API creates customised display pictures for brands and events to impro
 customised DPs using a campaign's banner|
 |make/dp/{slug}       | This end point creates the custom display pictures|
 
+## Good to know!!
 
+This project was originally built with Django but when I discovered in early April that Django projects were not good code samples for the MLH fellowship. I rewrote the code and submitted my application on the 26th of the same month. The project built for the hackathon was created with Django, here is the [link](https://github.com/Chinwendu20/I4GDPGenerator)
 
-## Projects built with this rest API
+## Projects built for the hackathon
 
 * DP Generator
   [Live site](https://dp-generator.vercel.app/)| [Github link](https://github.com/eniolajayi/dp-generator)
+  
+  [Live demo](https://www.linkedin.com/posts/maureen-ononiwu_hackforgrowth-codesandboxchallenge-codenewbie-activity-6914716433453043713-wTwe?utm_source=linkedin_share&utm_medium=member_desktop_web)
   
   Presentation embedded in image below:
   [![image](readme-images/desktop.jpg)](https://www.canva.com/design/DAE8EeC_4yI/nomyYurCNbOL_4pR0w6Grg/view?utm_content=DAE8EeC_4yI&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton#1)
