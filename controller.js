@@ -144,14 +144,14 @@ try{
 
     console.log(rows)
 if (rows==null){
+    
+    res.status(500).json({'error':'Record does not exist'})
+    
+    }
+
     delete rows[0].session
 
     res.status(200).json(rows)
-    }
-
-    res.status(500).json({'error':'Record does not exist'})
-
-
 }catch(e){
 
 next(e)
