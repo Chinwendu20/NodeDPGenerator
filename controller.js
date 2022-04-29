@@ -134,27 +134,36 @@ export const PostView = (req, res, next) => {
 
 
 export const PostGetUser=async (req, res, next)=>{
-
+try{
     var slug=req.params.slug
 
     var query = `select * from photo where link=${(quotes(slug))}`
 
+    console.log(query)
+
     var rows = await query_function(query, next)
 
+    console.log(rows)
+if (!rows){
     delete rows[0].session
 
     res.status(200).json(rows)
+    }
+
+    res.status(500).json({'error':'Record does not exist'})
 
 
+}catch(e){
+
+next(e)
 }
 
-
+}
 
 export const PostUpdateView = async (req, res, next) =>{
 
 try{
     var id = req.params.id
-    console.log(id)
 
         var updated_data=Object.keys(req.body)
         var content=[]
@@ -172,7 +181,6 @@ try{
 if(result){
 
 query_content=query_content.toString()
-console.log(query_content)
 await db.query(`update photo set ${query_content} where id = ${id}`)
 
 var query = `select * from photo where id=${id}`
