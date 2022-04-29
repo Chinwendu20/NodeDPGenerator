@@ -15,7 +15,7 @@ import fs from 'fs'
 
 export const PostView = (req, res, next) => {
 
-    console.log(req.headers)
+    
 
 
     const content={Banner: req.file, Link: req.body.Link, Height: req.body.Height, Width: req.body.Width, 
@@ -88,9 +88,6 @@ export const PostView = (req, res, next) => {
 
         var column =[...columns]
 
-        console.log(column)
-
-        console.log(value)
 
         req.session.save((err)=>{
 
@@ -163,8 +160,10 @@ export const PostUpdateView = async (req, res, next) =>{
 
 try{
     var id = req.params.id
-
+        console.log(id)
         var updated_data=Object.keys(req.body)
+        console.log(46553)
+        console.log(req.body)
         var content=[]
         var query_content=[]
         for(let i=0;i<updated_data.length;i++){
@@ -178,8 +177,10 @@ try{
     var result = await obtain_data_fromSession(req, id, next)
 
 if(result){
-
+console.log(query_content)
 query_content=query_content.toString()
+
+console.log(`update photo set ${query_content} where id = ${id}`)
 await db.query(`update photo set ${query_content} where id = ${id}`)
 
 var query = `select * from photo where id=${id}`
