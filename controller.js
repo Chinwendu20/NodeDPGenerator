@@ -76,7 +76,6 @@ export const PostView = (req, res, next) => {
 
  
 
-
      cloudinary.uploader.upload(req.file.path).then(fileObj=>{
 
         content.Banner = fileObj.url
