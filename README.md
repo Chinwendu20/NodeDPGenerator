@@ -18,6 +18,8 @@ This REST API creates customised display pictures for brands and events to impro
 * Heroku, used for deployment.
 * Swagger used for documentation.
 
+***Read about my bug chronicles [here](https://www.linkedin.com/posts/maureen-ononiwu_thebugchronicles-nodejs-nodejs-activity-6925646298079461376-wFxE?utm_source=linkedin_share&utm_medium=member_desktop_web)***
+
 ## Files and folder in the project
 
 -***readme-images***
