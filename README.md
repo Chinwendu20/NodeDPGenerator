@@ -62,7 +62,7 @@ This contains specifiction for Swagger documentation.
 
 This project was originally built with Django but when I discovered in early April that Django projects were not good code samples for the MLH fellowship. I rewrote the code and submitted my application on the 26th of the same month having no prior knowledge or experience with nodejs. The project built for the hackathon was created with Django, here is the [link](https://github.com/Chinwendu20/I4GDPGenerator)
 
-## Projects built for the hackathon
+## Project built for the hackathon
 
 * DP Generator
   [Live site](https://dp-generator.vercel.app/)| [Github link to frontend project](https://github.com/eniolajayi/dp-generator)
