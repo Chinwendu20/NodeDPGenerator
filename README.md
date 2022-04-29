@@ -48,7 +48,7 @@ This contains specifiction for Swagger documentation.
 
 ## Endpoints
 
-[Link to API documentation and testing](https://node-dp-generator.herokuapp.com/api-docs/)
+[Link to API documentation and testing](https://node-dp-generator.herokuapp.com/api-docs/) (Please click this link to test the end points)
 
 |ROUTE                |DESCRIPTION                    |
 |---------------------|-------------------------------|
