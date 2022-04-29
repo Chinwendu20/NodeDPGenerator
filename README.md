@@ -67,7 +67,7 @@ This project was originally built with Django but when I discovered in early Apr
 * DP Generator
   [Live site](https://dp-generator.vercel.app/)| [Github link to frontend project](https://github.com/eniolajayi/dp-generator)
   
-  [Live demo](https://www.linkedin.com/posts/maureen-ononiwu_hackforgrowth-codesandboxchallenge-codenewbie-activity-6914716433453043713-wTwe?utm_source=linkedin_share&utm_medium=member_desktop_web)
+  [Live demo](https://www.linkedin.com/posts/maureen-ononiwu_hackforgrowth-codesandboxchallenge-codenewbie-activity-6914716433453043713-wTwe?utm_source=linkedin_share&utm_medium=member_desktop_web) (Please click this link to watch the demo)
   
   Presentation embedded in image below:
   [![image](readme-images/desktop.jpg)](https://www.canva.com/design/DAE8EeC_4yI/nomyYurCNbOL_4pR0w6Grg/view?utm_content=DAE8EeC_4yI&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton#1)
