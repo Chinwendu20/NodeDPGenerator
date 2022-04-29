@@ -149,6 +149,7 @@ export const PostGetUser=async (req, res, next)=>{
 }
 
 
+
 export const PostUpdateView = async (req, res, next) =>{
 
 try{
@@ -197,7 +198,9 @@ export const PostDestroyView = async (req, res, next) =>{
 try{
                 var id = req.params.id
 
-            await obtain_data_fromSession(req, id, next)
+            var result = await obtain_data_fromSession(req, id, next)
+
+            if (result){
 
             await db.query(`delete from photo where id=${id}`)
 
@@ -205,7 +208,13 @@ try{
 
             res.json({message: 'Record deleted'})
             return;
+        }else{
 
+             res.status(403)
+             res.json({'message':'Forbidden request'})
+             return;
+
+        }
  
 
  }catch(error){
