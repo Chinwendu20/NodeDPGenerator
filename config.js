@@ -8,7 +8,7 @@ import cloudinary from "cloudinary"
 const app = express()
 const {Pool}=pg
 dotenv.config()
-const connectionString = process.env.DATABASE_URL
+const connectionString = process.env.HEROKU_POSTGRESQL_PINK_URL
 
 export const connect_pool = new Pool({
 	// user: process.env.user,

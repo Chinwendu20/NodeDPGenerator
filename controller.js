@@ -144,7 +144,7 @@ try{
     var rows = await query_function(query, next)
 
     console.log(rows)
-if (!rows){
+if (rows==null){
     delete rows[0].session
 
     res.status(200).json(rows)
