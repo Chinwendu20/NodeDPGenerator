@@ -17,7 +17,6 @@ export const PostView = (req, res, next) => {
 
     
 
-    console.log(req.file)
     const content={Banner: req.file, Link: req.body.Link, Height: req.body.Height, Width: req.body.Width, 
             Position_x: req.body.Position_x, Position_y: req.body.Position_y, Border_radius: req.body.Border_radius, 
             Name: req.body.Name, Description:req.body.Description, session: req.session.id}
@@ -51,7 +50,7 @@ export const PostView = (req, res, next) => {
         res.status(500)
 
         res.json(undefined_values)
-            console.log(res.getHeaders()['content-type'])
+
         return
 
     }
@@ -134,11 +133,8 @@ try{
 
     var query = `select * from photo where link=${(quotes(slug))}`
 
-    console.log(query)
-
     var rows = await query_function(query, next)
 
-    console.log(rows)
 if (rows==null){
     
     res.status(500).json({'error':'Record does not exist'})
@@ -159,14 +155,13 @@ export const PostUpdateView = async (req, res, next) =>{
 
 try{
     var id = req.params.id
-        console.log(id)
+
         var updated_data=Object.keys(req.body)
-        console.log(46553)
-        console.log(req.body)
+   
         var content=[]
         var query_content=[]
 
-        console.log(updated_data)
+
 
         var length_of_loop = updated_data.length
             if (req.file){
@@ -179,7 +174,6 @@ try{
 
         if(req.body){
 
-            console.log('There is a body')
 
             if(req.body.link){
 
@@ -217,10 +211,9 @@ try{
     var result = await obtain_data_fromSession(req, id, next)
 
 if(result){
-console.log(query_content)
 query_content=query_content.toString()
 
-console.log(`update photo set ${query_content} where id = ${id}`)
+
 await db.query(`update photo set ${query_content} where id = ${id}`)
 
 var query = `select * from photo where id=${id}`
@@ -283,11 +276,9 @@ try{
     var query = `select * from photo where link=${(quotes(slug))}`
 
     var result = await query_function(query, next)
-    console.log(result[0])
     var {id, banner, link, height, width, 
         position_x, position_y, border_radius, name, description}=result[0]
 
-    console.log(banner)
     var get_image =  http.get(banner)
 
     get_image.on('response',  async (response)=>{
@@ -306,8 +297,7 @@ try{
 
 
 
-  console.log(Banner_image)
-  console.log(req.file)
+
    let PhotoUploaded = await Jimp.read(req.file.path);
    PhotoUploaded = PhotoUploaded.resize(+width,+height); 
    var Banner = await Jimp.read(Banner_image);
@@ -324,7 +314,7 @@ try{
    cloudinary.v2.uploader.upload(upload_image).then(y=>{
    res.status(201)
 
-   // console.log(y)
+
    res.json({url: y.url})
    return;
 })

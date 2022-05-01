@@ -1,6 +1,10 @@
  import {connect_pool as db } from './config.js'
 
 
+
+
+// 
+
 export async function query_function(query, cb){
  try{
 
@@ -38,11 +42,7 @@ export async function obtain_data_fromSession(req, id, next){
 
     let session_id = req.session.id
 
-    console.log(897867565568678)
 
-    console.log(session_id)
-
-    console.log(id)
 
     var query = `select * from photo where session=${ (quotes(session_id)) } and id=${id}`
 
