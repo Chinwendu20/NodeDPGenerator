@@ -17,7 +17,7 @@ export const PostView = (req, res, next) => {
 
     
 
-
+    console.log(req.file)
     const content={Banner: req.file, Link: req.body.Link, Height: req.body.Height, Width: req.body.Width, 
             Position_x: req.body.Position_x, Position_y: req.body.Position_y, Border_radius: req.body.Border_radius, 
             Name: req.body.Name, Description:req.body.Description, session: req.session.id}
@@ -108,7 +108,6 @@ export const PostView = (req, res, next) => {
 
         delete content.session
 
-        content.id = req.body.id
 
         res.json(content)
 
@@ -166,13 +165,54 @@ try{
         console.log(req.body)
         var content=[]
         var query_content=[]
-        for(let i=0;i<updated_data.length;i++){
+
+        console.log(updated_data)
+
+        var length_of_loop = updated_data.length
+            if (req.file){
+
+        result = await cloudinary.uploader.upload(req.file.path)
+
+        query_content.push('Banner'+'='+quotes(result.url))
+
+        }
+
+        if(req.body){
+
+            console.log('There is a body')
+
+            if(req.body.link){
+
+                Console.log('There is a link')
+
+           var qs=`select * from photo where link=${(quotes(req.body.link))}`
+
+            var db_result = await query_function(qs, next)
+
+        
+
+    if (db_result.length !=0){
+
+        res.status(500)
+
+        res.json({error:'Link already in use'})
+
+        return;
+
+        }
+
+         } 
+        
+
+        for(let i=0;i<length_of_loop;i++){
             content = req.body[updated_data[i]]
             query_content.push(updated_data[i]+'='+quotes(content))
-            
+
         
      }
-       
+      
+     
+  }
 
     var result = await obtain_data_fromSession(req, id, next)
 

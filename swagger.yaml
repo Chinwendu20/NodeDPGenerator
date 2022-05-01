@@ -196,7 +196,7 @@ paths:
         '201':
           description: 'successful request'
           schema:
-            $ref: '#/definitions/Campaign'
+            $ref: '#/definitions/Campaign_Model'
         '500':
           description: 'Link already in use or incomplete response'
       consumes:
