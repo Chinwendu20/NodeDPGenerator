@@ -49,6 +49,7 @@ This contains specifiction for Swagger documentation.
 ## Endpoints
 
 [Link to API Documentation](https://documenter.getpostman.com/view/14112837/UyrGBtwp)
+[Test end points](http://ec2-54-146-255-154.compute-1.amazonaws.com/api-docs/)
 <!-- [Link to API documentation and testing](https://nodejs-dp-generator.herokuapp.com/api-docs/) (Please click this link to test the end points) -->
 
 |ROUTE                |DESCRIPTION                    |
