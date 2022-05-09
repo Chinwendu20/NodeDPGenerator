@@ -15,15 +15,19 @@ This REST API creates customised display pictures for brands and events to impro
 * Cloudinary, used as image's cloud storage.
 * PostgreSQL, Database used for project.
 * Jimp, for image pocessing.
-* Heroku, used for deployment.
+* AWS ec2, used for deployment.
 * Swagger used for documentation.
-
+* Mocha, chai, supertest for creating test
+* Joi for schema validation
 ***Read about my bug chronicles [here](https://www.linkedin.com/posts/maureen-ononiwu_thebugchronicles-nodejs-nodejs-activity-6925646298079461376-wFxE?utm_source=linkedin_share&utm_medium=member_desktop_web)***
 
 ## Files and folder in the project
 
 -***readme-images***
 This contains images used in read-me of the project.
+
+-***test***
+This contains test files for the code
 
 -***upload***
 This contains images that were downloaded and uploaded to the server for processing.
@@ -54,11 +58,11 @@ This contains specifiction for Swagger documentation.
 
 |ROUTE                |DESCRIPTION                    |
 |---------------------|-------------------------------|
-|post/                |This creates the campaign.     |
-|delete/{id}/         |This deletes a campaign|                 
-|update/{id}/         |Updates data about a campaign |
-|{slug}/              | This is the sharable link sent to people to create customised DPs using a campaign's banner|
-|make/dp/{slug}       | This end point creates the custom display pictures|
+|POST /campaign/      |This creates the campaign.     |
+|DELETE /campaign/{id}|This deletes a campaign        |                 
+|UPDATE /campaign/{id |Updates data about a campaign  |
+|/{slug}/             | This is the sharable link sent to people to create customised DPs using a campaign's banner|
+|/make/dp/{slug}      | This end point creates the custom display pictures|
 
 ## Good to know!!
 
