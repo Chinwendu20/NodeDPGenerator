@@ -7,8 +7,9 @@ import {connect_pool as db } from './config.js' //The database pool
 import Jimp from 'jimp' //Used for the image manipulation
 import {query_function, quotes, validateObjModel, convert_to_png, Obtain_missing_element} from './helper.js'
 import http from 'http'
-import fs from 'fs'
+import fs_ from 'fs'
 import { v4 as uuidv4 } from 'uuid';
+const fs=fs_.promises
 
 
 
@@ -285,7 +286,7 @@ try{
 
     var Banner_image=`./upload/${filename}${(uuidv4())}`
 
-    var stream = fs.createWriteStream(Banner_image)
+    var stream = fs_.createWriteStream(Banner_image)
 
     response.pipe(stream)
 
@@ -304,6 +305,12 @@ try{
       await Banner.writeAsync(upload_image);
 
    var finished_image = await cloudinary.v2.uploader.upload(upload_image)
+
+    await fs.unlink(upload_image)
+
+    await fs.unlink(Banner_image)
+
+    await fs.unlink(req.file.path)
 
    return res.status(201).json({url: finished_image.url})
       get_image.on('error', error=>{
