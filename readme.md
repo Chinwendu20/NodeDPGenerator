@@ -61,8 +61,8 @@ This contains specifiction for Swagger documentation.
 |POST /campaign/      |This creates the campaign.     |
 |DELETE /campaign/{id}|This deletes a campaign        |                 
 |UPDATE /campaign/{id |Updates data about a campaign  |
-|/{slug}/             | This is the sharable link sent to people to create customised DPs using a campaign's banner|
-|/make/dp/{slug}      | This end point creates the custom display pictures|
+|GET /{slug}/         | This is the sharable link sent to people to create customised DPs using a campaign's banner|
+|POST /make/dp/{slug} | This end point creates the custom display pictures|
 
 ## Good to know!!
 
