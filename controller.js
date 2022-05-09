@@ -5,168 +5,143 @@ import cloudinary from "cloudinary" //The cloud storage used
 //Used for parsing form data used specically for the files in this app
 import {connect_pool as db } from './config.js' //The database pool
 import Jimp from 'jimp' //Used for the image manipulation
-import {query_function, download, quotes, obtain_data_fromSession } from './helper.js'
+import {query_function, quotes, validateObjModel, convert_to_png, Obtain_missing_element} from './helper.js'
 import http from 'http'
 import fs from 'fs'
+import { v4 as uuidv4 } from 'uuid';
 
 
 
 
 
-export const PostView = (req, res, next) => {
+export const PostView = async (req, res, next) => {
 
-    
+  try{
 
-    const content={Banner: req.file, Link: req.body.Link, Height: req.body.Height, Width: req.body.Width, 
-            Position_x: req.body.Position_x, Position_y: req.body.Position_y, Border_radius: req.body.Border_radius, 
-            Name: req.body.Name, Description:req.body.Description, session: req.session.id}
+    var {error, value} = validateObjModel(req.body)
 
-    const columns = []
+    if(error){
 
-    const values=[]
-
-    let undefined_values={}
-
-    for (let x in content){
-
-        if (content[x]==undefined && x != 'Border_radius'){
-
-            undefined_values[x] =`${x} cannot be empty`
-
-            continue
-        }
-        if (Object.keys(undefined_values).length==0 && content[x] != undefined){
-
-            values.push(content[x])
-
-            columns.push(x)
-
-            }
-    }
-
-    if (Object.keys(undefined_values).length!=0){
-
-
-        res.status(500)
-
-        res.json(undefined_values)
-
-        return
+        return res.status(500).send(error.details.map(Obtain_missing_element))
 
     }
 
-    var link=req.body.Link
+    if (req.file==undefined){
+
+        return res.status(500).send({error: 'banner field is required'})
+    }
+    var link=req.body.link
 
    var qs=`select * from photo where link=${(quotes(link))}`
 
-    query_function(qs, next).then(result=>
+    var {rows, err}  = await query_function(qs)
 
-        {
+    if (err){
 
-    if (result.length !=0){
+        res.status(500).end()
 
-        res.status(500)
+        return next(err)
+    }
 
-        res.json({error:'Link already in use'})
+    if (rows.length != 0){
 
-        return;
+        return res.status(500).json({error:'Link already in use'})
 
         } 
 
- 
+     var fileObj = await cloudinary.uploader.upload(req.file.path)
 
-     cloudinary.uploader.upload(req.file.path).then(fileObj=>{
+     const content=req.body
 
-        content.Banner = fileObj.url
+     content.banner= fileObj.url
 
-        var value = [...values]
+       var columns = Object.keys(content).toString()
+        var values = Object.values(content).map(quotes).toString()
 
-        value.shift()
+        var query = `insert into photo ( ${columns} ) values ( ${values} )`
 
-        value.unshift(fileObj.url)
+        var {rows, err}=await query_function(query)
 
-        var column =[...columns]
+        if (err){
 
+            res.status(500).end()
 
-        req.session.save((err)=>{
-
-        if(err){
-
-            next(err)
+            return next(err)
         }
 
-        var query = `insert into photo ( ${column} ) values ( ${(value.map(quotes))} )`
+        return res.status(201).json(content)  
+  
 
-        query_function(query, next)
-        })
+    }catch(err){
 
-        
-        
+        res.status()
 
-        res.status(201)
-
-        delete content.session
+        return next(err)
 
 
-        res.json(content)
-
-        return;
-
-     })
-
-    .catch(err=>{
-
-        next(err)
-
-        return;
-    })
-
-  })
+    }
 }
+
+
 
 
 
 
 export const PostGetUser=async (req, res, next)=>{
 try{
+
     var slug=req.params.slug
 
     var query = `select * from photo where link=${(quotes(slug))}`
 
-    var rows = await query_function(query, next)
+    var {rows, err} = await query_function(query)
 
-if (rows==null){
+    if(err){
+
+        res.status(500).end()
+
+        return next(err)
+    }
+
+if (rows.length == 0){
     
-    res.status(500).json({'error':'Record does not exist'})
+    return res.status(500).json({'error':'Record does not exist'})
     
     }
 
+
     delete rows[0].session
 
-    res.status(200).json(rows)
+    return res.status(200).json(rows)
 }catch(e){
 
-next(e)
+ next(e)
+return res.status(500).end()
 }
 
 }
+
 
 export const PostUpdateView = async (req, res, next) =>{
 
 try{
+
+    // Obtaining id parameter from request url
     var id = req.params.id
 
-        var updated_data=Object.keys(req.body)
+    // Obtaining data for update from request body
+    var updated_data=Object.keys(req.body)
    
         var content=[]
         var query_content=[]
 
 
-
         var length_of_loop = updated_data.length
+
+        //Uploading new banner image if in request body
             if (req.file){
 
-        result = await cloudinary.uploader.upload(req.file.path)
+        var result = await cloudinary.uploader.upload(req.file.path)
 
         query_content.push('Banner'+'='+quotes(result.url))
 
@@ -177,21 +152,21 @@ try{
 
             if(req.body.link){
 
-                Console.log('There is a link')
-
            var qs=`select * from photo where link=${(quotes(req.body.link))}`
 
-            var db_result = await query_function(qs, next)
+            var {rows, err} = await query_function(qs) 
 
-        
+            if(err){
 
-    if (db_result.length !=0){
+                res.status(500).end()
 
-        res.status(500)
+                return next(err)
+            }
 
-        res.json({error:'Link already in use'})
+    if (rows.length !=0){
 
-        return;
+        return res.status(500).json({error:'Link already in use'})
+
 
         }
 
@@ -208,61 +183,65 @@ try{
      
   }
 
-    var result = await obtain_data_fromSession(req, id, next)
 
-if(result){
 query_content=query_content.toString()
-
-
-await db.query(`update photo set ${query_content} where id = ${id}`)
 
 var query = `select * from photo where id=${id}`
 
-var qs= await query_function(query)
-    res.status(200)
-    res.json(qs)
-    return;
+var {rows, err}= await query_function(query)
+
+if(rows.length == 0){
+
+    res.status(400).json({error:'Invalid request, id does not exist'})
 }
 
- res.status(403)
- res.json({'message':'Forbidden request'})
- return;
-   
+await db.query(`update photo set ${query_content} where id = ${id}`)
+
+
+
+    if(err){
+
+        res.status(500).end()
+
+        next(err)
+
+        return;
+    }
+    return res.status(200).json(rows)
+    
 
 }catch(e){
-    next(e)
+    res.status(500).end()
+    return next(e)
 }
 }
+
+
+
 
 export const PostDestroyView = async (req, res, next) =>{
 
 try{
                 var id = req.params.id
 
-            var result = await obtain_data_fromSession(req, id, next)
+                var query = `select * from photo where id=${id}`
 
-            if (result){
+                var {rows, err}= await query_function(query)
+
+                if(rows.length == 0){
+
+                    return res.status(400).json({error:'Invalid request, id does not exist'})
+                }
 
             await db.query(`delete from photo where id=${id}`)
 
-            res.status(204)
-
-            res.json({message: 'Record deleted'})
-            return;
-        }else{
-
-             res.status(403)
-             res.json({'message':'Forbidden request'})
-             return;
-
-        }
- 
-
+            return res.status(204).end()
  }catch(error){
 
     next(error)
  }
- }   
+}
+ 
 
 
 
@@ -271,13 +250,28 @@ try{
 export const PhotoManipulateView = async (req, res, next) =>{
 
 try{
+
+        if (req.file==undefined){
+
+        return res.status(500).send({error: 'upload_photo field is required'})
+    }
     var slug=req.params.slug
 
     var query = `select * from photo where link=${(quotes(slug))}`
 
-    var result = await query_function(query, next)
+    var {rows, err} = await query_function(query, next)
+
+    if (rows[0] == undefined){
+
+        return res.status(500).send({error: 'link does not exist'})
+    }
+
+    if(err){
+
+        next(err)
+    }
     var {id, banner, link, height, width, 
-        position_x, position_y, border_radius, name, description}=result[0]
+        position_x, position_y, border_radius, name, description}=rows[0]
 
     var get_image =  http.get(banner)
 
@@ -289,13 +283,11 @@ try{
 
     let filename = response_request_path.slice(initial_slice_index+1)
 
-    var Banner_image=`./upload/${filename}`
+    var Banner_image=`./upload/${filename}${(uuidv4())}`
 
     var stream = fs.createWriteStream(Banner_image)
 
     response.pipe(stream)
-
-
 
 
    let PhotoUploaded = await Jimp.read(req.file.path);
@@ -310,26 +302,18 @@ try{
 
     var upload_image='upload/newmage.png'
       await Banner.writeAsync(upload_image);
-      var custom_dp_url;
-   cloudinary.v2.uploader.upload(upload_image).then(y=>{
-   res.status(201)
 
+   var finished_image = await cloudinary.v2.uploader.upload(upload_image)
 
-   res.json({url: y.url})
-   return;
-})
-.catch(err=>{
-    next(err)
-})
-})
-
+   return res.status(201).json({url: finished_image.url})
       get_image.on('error', error=>{
         next(error)
         return;
     })
+})
 }catch(err){
 
-    next(err)
-    return;
+   return next(err)
+    
 }
 }

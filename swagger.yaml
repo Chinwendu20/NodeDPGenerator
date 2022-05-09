@@ -21,7 +21,7 @@ paths:
       operationId: make_dp_create
       description: 'This end point creates the custom display pictures'
       parameters:
-        - name: User_Photo
+        - name: user_photo
           in: formData
           required: true
           type: file
@@ -30,6 +30,8 @@ paths:
           description: 'Successfully posted data to database'
           schema:
             $ref: '#/definitions/CustomDP_Model'
+        '500':
+          description: 'upload_photo field is required'
       consumes:
         - multipart/form-data
       tags:
@@ -39,16 +41,16 @@ paths:
         in: path
         required: true
         type: string
-  /update/{id}/:
+  /campaign/{id}/:
     patch:
       operationId: update_modify
-      description: 'Update and modify data about a campaign'
+      description: 'Update/modify data about a campaign'
       parameters:
-        - name: Banner
+        - name: user_photo 
           in: formData
           required: false
-          type: string
-        - name: Link
+          type: file
+        - name: link
           in: formData
           required: false
           type: string
@@ -56,44 +58,44 @@ paths:
           pattern: ^[-a-zA-Z0-9_]+$
           maxLength: 250
           minLength: 1
-        - name: Height
+        - name: height
           in: formData
           required: false
-          type: string
-          maxLength: 200
-          minLength: 1
-        - name: Width
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        - name: width
           in: formData
           required: false
-          type: string
-          maxLength: 200
-          minLength: 1
-        - name: Position_x
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        - name: position_x
           in: formData
           required: false
-          type: string
-          maxLength: 200
-          minLength: 1
-        - name: Position_y
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        - name: position_y
           in: formData
           required: false
-          type: string
-          maxLength: 200
-          minLength: 1
-        - name: Border_radius
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        - name: border_radius
           in: formData
           required: false
           type: integer
           maximum: 2147483647
           minimum: -2147483648
           x-nullable: true
-        - name: Name
+        - name: name
           in: formData
           required: false
           type: string
           maxLength: 200
           minLength: 1
-        - name: Description
+        - name: description
           in: formData
           required: false
           type: string
@@ -104,8 +106,10 @@ paths:
           description: 'Successful update'
           schema:
             $ref: '#/definitions/Campaign_Model'
-        '403':
-          description: 'Forbidden request'
+        '500':
+          description: 'Link already in use'
+        '400':
+          description: 'Invalid request, id does not exist'
       consumes:
         - multipart/form-data
       tags:
@@ -115,7 +119,6 @@ paths:
         in: path
         required: true
         type: string
-  /delete/{id}/:
     delete:
       operationId: modify_delete
       description: 'Delete campaign'
@@ -123,25 +126,22 @@ paths:
       responses:
         '204':
           description: 'Successful deletion'
+        '400':
+          description: 'Invalid request, id does not exist'
       consumes:
         - multipart/form-data
       tags:
         - Delete campaign
-    parameters:
-      - name: id
-        in: path
-        required: true
-        type: string
-  /post/:
+  /campaign/:
     post:
       operationId: post_create
       description: 'This returns JSON data of the campaign'
       parameters:
-        - name: Banner
+        - name: banner
           in: formData
           required: true
           type: file
-        - name: Link
+        - name: link
           in: formData
           required: true
           type: string
@@ -149,44 +149,44 @@ paths:
           pattern: ^[-a-zA-Z0-9_]+$
           maxLength: 250
           minLength: 1
-        - name: Height
+        - name: height
           in: formData
           required: true
-          type: string
-          maxLength: 200
-          minLength: 1
-        - name: Width
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        - name: width
           in: formData
           required: true
-          type: string
-          maxLength: 200
-          minLength: 1
-        - name: Position_x
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        - name: position_x
           in: formData
           required: true
-          type: string
-          maxLength: 200
-          minLength: 1
-        - name: Position_y
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        - name: position_y
           in: formData
           required: true
-          type: string
-          maxLength: 200
-          minLength: 1
-        - name: Border_radius
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        - name: border_radius
           in: formData
           required: false
           type: integer
           maximum: 2147483647
           minimum: -2147483648
           x-nullable: true
-        - name: Name
+        - name: name
           in: formData
           required: true
           type: string
           maxLength: 200
           minLength: 1
-        - name: Description
+        - name: description
           in: formData
           required: true
           type: string
@@ -198,7 +198,7 @@ paths:
           schema:
             $ref: '#/definitions/Campaign_Model'
         '500':
-          description: 'Link already in use or incomplete response'
+          description: 'Missing field is required/link already in use'
       consumes:
         - multipart/form-data
       tags:
@@ -212,6 +212,8 @@ paths:
       responses:
         '200':
           description: 'Successful request'
+        '500':
+          description: 'Record does not exist'
       consumes:
         - multipart/form-data
       tags:
@@ -225,21 +227,21 @@ definitions:
   CustomDP_Model:
     type: object
     properties:
-      User_Photo:
-        title: User_Photo
+      user_photo:
+        title: user_photo
         type: string
         readOnly: true
         format: uri
         description: URL of the uploaded file 
   Campaign_Model:
     required:
-      - Link
-      - Height
-      - Width
-      - Position_x
-      - Position_y
-      - Name
-      - Description
+      - link
+      - height
+      - width
+      - position_x
+      - position_y
+      - name
+      - description
     type: object
     properties:
       id:
@@ -248,15 +250,15 @@ definitions:
         readOnly: true
         description: "This is the unique id of the camapaign"
         example: 1
-      Banner:
-        title: Banner
+      banner:
+        title: banner
         type: string
         readOnly: true
         format: uri
         description: This is the URL of the uploaded banner for the campaign
         example: https://res.cloudinary/sample.png
-      Link:
-        title: Link
+      link:
+        title: link
         type: string
         format: slug
         pattern: ^[-a-zA-Z0-9_]+$
@@ -264,53 +266,136 @@ definitions:
         minLength: 1
         description: This is the slug used to create the link used to create a sharable link.
         example: sluglink
-      Height:
-        title: Height
-        type: string
-        maxLength: 200
-        minLength: 1
+      height:
+        title: height
+        type: integer
+        maximum: 2147483647
+        minimum: -2147483648
         description: This is the vertical length of the image to be pasted.
         example: 240
-      Width:
-        title: Width
-        type: string
-        maxLength: 200
-        minLength: 1
+      width:
+        title: width
+        type: integer
+        maximum: 2147483647
+        minimum: -2147483648
         description: This is the horizontal length of the image to be pasted.
         example: 240
-      Position_x:
+      position_x:
         title: Position x
-        type: string
-        maxLength: 200
-        minLength: 1
+        type: integer
+        maximum: 2147483647
+        minimum: -2147483648
         description: This is the distance of the image to be pasted on the banner from the left.
         example: 212
-      Position_y:
+      position_y:
         title: Position y
-        type: string
-        maxLength: 200
-        minLength: 1
+        type: integer
+        maximum: 2147483647
+        minimum: -2147483648
         description: This is the distance of the image to be pasted on the banner from the top.
         example: 234
-      Border_radius:
+      border_radius:
         title: Border radius
         type: integer
         maximum: 2147483647
         minimum: -2147483648
         x-nullable: true
-      Name:
-        title: Name
+      name:
+        title: name
         type: string
         maxLength: 200
         minLength: 1
         description: "This represents the name of the campaign."
         example: "Kwarabuild initiative"
-      Description:
-        title: Description
+      description:
+        title: description
         type: string
         maxLength: 200
         minLength: 1
         description: The name of the campaign.
         example: Kwarabuild initiative
+  # Campaign_update_Model:
+  #     required:
+  #       - link
+  #       - height
+  #       - width
+  #       - position_x
+  #       - position_y
+  #       - name
+  #       - description
+  #     type: object
+  #     properties:
+  #       id:
+  #         title: ID
+  #         type: integer
+  #         readOnly: true
+  #         description: "This is the unique id of the camapaign"
+  #         example: 1
+  #       user_photo:
+  #         title: user_photo
+  #         type: string
+  #         readOnly: true
+  #         format: uri
+  #         description: This is the URL of the uploaded banner for the campaign
+  #         example: https://res.cloudinary/sample.png
+  #       link:
+  #         title: link
+  #         type: string
+  #         format: slug
+  #         pattern: ^[-a-zA-Z0-9_]+$
+  #         maxLength: 250
+  #         minLength: 1
+  #         description: This is the slug used to create the link used to create a sharable link.
+  #         example: sluglink
+  #       height:
+  #         title: height
+  #         type: integer
+  #         maximum: 2147483647
+  #         minimum: -2147483648
+  #         description: This is the vertical length of the image to be pasted.
+  #         example: 240
+  #       width:
+  #         title: width
+  #         type: integer
+  #         maximum: 2147483647
+  #         minimum: -2147483648
+  #         description: This is the horizontal length of the image to be pasted.
+  #         example: 240
+  #       position_x:
+  #         title: Position x
+  #         type: integer
+  #         maximum: 2147483647
+  #         minimum: -2147483648
+  #         description: This is the distance of the image to be pasted on the banner from the left.
+  #         example: 212
+  #       position_y:
+  #         title: Position y
+  #         type: integer
+  #         maximum: 2147483647
+  #         minimum: -2147483648
+  #         description: This is the distance of the image to be pasted on the banner from the top.
+  #         example: 234
+  #       border_radius:
+  #         title: Border radius
+  #         type: integer
+  #         maximum: 2147483647
+  #         minimum: -2147483648
+  #         x-nullable: true
+  #       name:
+  #         title: name
+  #         type: string
+  #         maxLength: 200
+  #         minLength: 1
+  #         description: "This represents the name of the campaign."
+  #         example: "Kwarabuild initiative"
+  #       description:
+  #         title: description
+  #         type: string
+  #         maxLength: 200
+  #         minLength: 1
+  #         description: The name of the campaign.
+  #         example: Kwarabuild initiative
+
+
 
 

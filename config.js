@@ -11,11 +11,6 @@ dotenv.config()
 const connectionString = process.env.HEROKU_POSTGRESQL_PINK_URL
 
 export const connect_pool = new Pool({
-	// user: process.env.user,
-	// host:process.env.host,
-	// database:process.env.database,
-	// password:process.env.password,
-	// port:process.env.port,
 	connectionString,
 	ssl:{require: true, 
 		rejectUnauthorized: false}
@@ -33,26 +28,3 @@ export const pgSession = new ((pg_simple)(expressSession))({
 	table_name: 'session'
 })
 
-
-
-
-
-
-// const storage = multer.diskStorage({
-//   destination: 'upload',
-//   filename: file.originalname
-// })
-
-// export const imageUpload = multer({
-//       storage: storage,
-//       limits: {
-//         fileSize: 1000000 // 1000000 Bytes = 1 MB
-//       },
-//       fileFilter(req, file, cb) {
-//         if path.extname(file.originalname) != 'jpg'|'jpeg'|'png' { 
-//            return cb(new Error('Please upload an image'))
-//          }
-//        cb(undefined, true)
-//     }
-// }) 
-// const upload = multer({ storage: storage })

@@ -15,10 +15,10 @@ export const upload = multer({ dest: "upload/" })
 
 router.use('/api-docs', swaggerUi.serve)
 router.get('/api-docs', swaggerUi.setup(swaggerDocument))
-router.post('/post', upload.single('Banner'), PostView)
-router.patch('/update/:id',upload.single('User_Photo'), PostUpdateView)
-router.delete('/delete/:id', PostDestroyView )
+router.post('/campaign', upload.single('banner'), PostView)
+router.patch('/campaign/:id',upload.single('user_photo'), PostUpdateView)
+router.delete('/campaign/:id', PostDestroyView )
 router.get('/:slug', PostGetUser)
-router.post('/make/dp/:slug', upload.single('User_Photo'), PhotoManipulateView)
+router.post('/make/dp/:slug', upload.single('user_photo'), PhotoManipulateView)
 
 export default router;

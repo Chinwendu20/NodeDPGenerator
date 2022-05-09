@@ -1,59 +1,80 @@
  import {connect_pool as db } from './config.js'
+ import Joi from 'Joi'
 
 
 
 
-// 
 
-export async function query_function(query, cb){
+
+//User-defined function to validate the user
+export function validateObjModel(ObjModel)
+{
+    const JoiSchema = Joi.object({
+    
+        link:Joi.string()
+            .required(),
+        height:Joi.number()
+            .integer()
+            .required(),
+        width:Joi.number()
+            .integer()
+            .required(),
+        position_x:Joi.number()
+            .integer()
+            .required(),
+        position_y:Joi.number()
+            .integer()
+            .required(),
+        border_radius:Joi.number()
+            .integer()
+            .optional(),
+        name:Joi.string()
+            .required(),
+        description:Joi.string()
+            .required(),
+        session:Joi.string()
+            .alphanum()
+            .optional(),
+
+                
+    }).options({ abortEarly: false });
+
+    return JoiSchema.validate(ObjModel)
+}
+
+
+export function convert_to_png(err, image, _name){
+    if (err){
+        return next(err)
+    }
+    image.write(`${_name}.png`)
+}
+
+
+
+export async function query_function(query){
  try{
 
  var { rows } = await db.query(query)
 
-return rows
+return {rows:rows, err:undefined}
 
 
 } catch(err){
 
-
-cb(err)
-return;
+return {rows:undefined, err:err}
 }
 }
 
 export function quotes(num){
     return "\'"+num+"\'"
 }
-export function download  (name, file, info) {
-
-        const {filename, encoding, mimeType}=info
-
-        const filePath = path.join(`./upload/${filename}`)
-
-        file.pipe(fs.createWriteStream(filePath))
 
 
-    }
+export function Obtain_missing_element(item){
+
+    return item.message
+}
 
 
-
-
-export async function obtain_data_fromSession(req, id, next){
-
-    let session_id = req.session.id
-
-
-
-    var query = `select * from photo where session=${ (quotes(session_id)) } and id=${id}`
-
-    try{
-
-            var result = await query_function(query, next)
-            return result
-    }catch(e){
-        next(e)
-            return;
-        }
-
-    }
 
