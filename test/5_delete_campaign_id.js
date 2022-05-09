@@ -3,7 +3,7 @@ const request = supertest("http://127.0.0.1:3000");
 import { expect } from "chai";
 
 
-var id=28
+var id=39
 
 describe("Unsuccesful DELETE /campaign/:id", function () {
   it("id does not exist", async function () {

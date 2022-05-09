@@ -3,7 +3,7 @@ const request = supertest("http://127.0.0.1:3000");
 import { expect } from "chai";
 
 
-var slug='polop'
+var slug='mappwayyotu'
 
 describe("Successful GET /:slug", function () {
   it("Successfully obtains data about a particular campaign", async function () { 

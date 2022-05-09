@@ -1,5 +1,5 @@
  import {connect_pool as db } from './config.js'
- import Joi from 'Joi'
+ import Joi from 'joi'
 
 
 

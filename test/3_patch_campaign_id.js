@@ -4,8 +4,8 @@ import { expect } from "chai";
 
 
 
-var id=28
-var slug='polop'
+var id=39
+var slug='mappwayyotu'
 
 
 describe("Unsuccesful PATCH /campaign/:id", function () {
